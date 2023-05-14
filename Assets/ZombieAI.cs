@@ -8,6 +8,7 @@ public class ZombieAI : MonoBehaviour
     public float speed = 0.5f;
     public float detectionRadius = 5.0f;
     public float chaseRadius = 5.0f;
+    public float attackRadius = 2.0f;
 
     public Transform groundCheck_Zombie;
     public float groundDistance = 0.5f;
@@ -16,10 +17,19 @@ public class ZombieAI : MonoBehaviour
 
     private bool isGrounded;
     private Rigidbody rb;
+    private Animator animator;
+
+
+    private bool isIdle = true;
+    private bool isRunning = false;
+
+    public bool idle = true;
+    public bool run = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -36,24 +46,44 @@ public class ZombieAI : MonoBehaviour
         }
 
         float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
-        //Debug.Log(distanceToTarget);
-        //Debug.Log(chaseRadius);
+
         if (distanceToTarget <= chaseRadius)
         {
-            // Player is within chase radius, run towards the player
-            Vector3 direction = (Target.transform.position - transform.position).normalized;
-            rb.velocity = direction * speed;
-            transform.LookAt(Target.transform);
 
+            if (distanceToTarget <= attackRadius)
+            {
+                // Stop moving and play the idle animation
+                rb.velocity = Vector3.zero;
+                transform.LookAt(Target.transform);
+
+                animator.SetTrigger("Attack");
+                animator.SetBool("Idle", false);
+                animator.SetBool("RUN", false);
+            }
+
+            else
+            {
+                // Player is within chase radius, run towards the player
+                Vector3 direction = (Target.transform.position - transform.position).normalized;
+                rb.velocity = direction * speed;
+                transform.LookAt(Target.transform);
+
+                // Play the run animation
+                animator.SetBool("Idle", false);
+                animator.SetBool("RUN", true);
+            }
         }
+
         else
         {
-            Vector3 direction = (Target.transform.position - transform.position).normalized;
-            rb.velocity = direction * 0;
+            // Stop moving and play the idle animation
+            rb.velocity = Vector3.zero;
             transform.LookAt(Target.transform);
+
+            // Play the idle animation
+            animator.SetBool("Idle", true);
+            animator.SetBool("RUN", false);
         }
-
-
     }
 
     // Draw the detection radius in the editor
