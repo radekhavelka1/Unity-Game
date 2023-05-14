@@ -36,8 +36,8 @@ public class ZombieAI : MonoBehaviour
         }
 
         float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
-        Debug.Log(distanceToTarget);
-        Debug.Log(chaseRadius);
+        //Debug.Log(distanceToTarget);
+        //Debug.Log(chaseRadius);
         if (distanceToTarget <= chaseRadius)
         {
             // Player is within chase radius, run towards the player
