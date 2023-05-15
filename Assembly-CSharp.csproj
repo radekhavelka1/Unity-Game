@@ -70,6 +70,7 @@
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\LoadGame_2.cs" />
     <Compile Include="Assets\ResumeHelp.cs" />
+    <Compile Include="Assets\Minimap.cs" />
     <Compile Include="Assets\MouseLook.cs" />
     <Compile Include="Assets\EndScreen.cs" />
     <Compile Include="Assets\ZombieAI.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Assets\EndMenu.cs" />
     <Compile Include="Assets\LoadGame.cs" />
     <Compile Include="Assets\RestartGame.cs" />
-    <Compile Include="Assets\Minimap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
