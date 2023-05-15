@@ -14,7 +14,7 @@ public class EndScreen : MonoBehaviour
 
     public void ShowEndScreen()
     {
-        Debug.Log("ShowEndScreen() function called");
-        SceneManager.LoadScene("End Screen");
+        Debug.Log("CALL ENDSCREEN");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
 }

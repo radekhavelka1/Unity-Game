@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -20,7 +22,9 @@ public class PlayerInventory : MonoBehaviour
         if (NumberOfClipboards >= 1 && !thresholdReached) // Check if the threshold has been reached
         {
             thresholdReached = true;
-            OnThresholdReached.Invoke(); // Invoke the Unity Event
+            SceneManager.LoadScene("EndScreen");
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
         }
 
         UnityEngine.UI.Text txt = mujCanvas.GetComponent<UnityEngine.UI.Text>();
