@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ZombieAI : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class ZombieAI : MonoBehaviour
     public float detectionRadius = 5.0f;
     public float chaseRadius = 5.0f;
     public float attackRadius = 2.0f;
+    public PlayerMovement player;
 
     public Transform groundCheck_Zombie;
     public float groundDistance = 0.5f;
@@ -18,18 +21,23 @@ public class ZombieAI : MonoBehaviour
     private bool isGrounded;
     private Rigidbody rb;
     private Animator animator;
-
-
-    private bool isIdle = true;
-    private bool isRunning = false;
+    public Text healthText;
+    private int currentHealth;
 
     public bool idle = true;
     public bool run = false;
+
+    private float attackPeriod = 2f;
+    private int attackDamage = 20;
+
+    private float timeSinceLastAttack = 0f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        currentHealth = player.Health;
+        UpdateHealthText();
     }
 
     private void Update()
@@ -59,6 +67,15 @@ public class ZombieAI : MonoBehaviour
                 animator.SetTrigger("Attack");
                 animator.SetBool("Idle", false);
                 animator.SetBool("RUN", false);
+
+                timeSinceLastAttack += Time.deltaTime;
+
+                if (timeSinceLastAttack >= attackPeriod)
+                {
+                    Attack();
+                    Debug.Log(player.Health);
+                    timeSinceLastAttack = 0f;
+                }
             }
 
             else
@@ -91,5 +108,26 @@ public class ZombieAI : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    private void Attack()
+    {
+        // Apply damage to the target
+        player.Health -= attackDamage;
+
+        currentHealth = player.Health;
+        if(currentHealth <= 0) 
+        {
+            SceneManager.LoadScene("GameOver");
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+        UpdateHealthText();
+    }
+
+    private void UpdateHealthText()
+    {
+        // Update the text object with the player's current health
+        healthText.text = "HP: " + currentHealth.ToString();
     }
 }

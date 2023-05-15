@@ -58,13 +58,25 @@
   <ItemGroup>
     <Compile Include="Assets\StartMenu.cs" />
     <Compile Include="Assets\Clipboard.cs" />
+    <Compile Include="Assets\LoadGame_1.cs" />
     <Compile Include="Assets\InventoryUI.cs" />
     <Compile Include="Assets\PlayerInventory.cs" />
+    <Compile Include="Assets\LoadGame_3.cs" />
+    <Compile Include="Assets\LoadGame_8.cs" />
+    <Compile Include="Assets\LoadGame_4.cs" />
+    <Compile Include="Assets\LoadGame_6.cs" />
+    <Compile Include="Assets\LoadGame_7.cs" />
+    <Compile Include="Assets\Low Polygon Potions Pack\Other Assets\Scripts\CreatePrefabFromSelected.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\LoadGame_2.cs" />
+    <Compile Include="Assets\ResumeHelp.cs" />
     <Compile Include="Assets\MouseLook.cs" />
     <Compile Include="Assets\EndScreen.cs" />
     <Compile Include="Assets\ZombieAI.cs" />
+    <Compile Include="Assets\LoadGame_5.cs" />
+    <Compile Include="Assets\Potion.cs" />
     <Compile Include="Assets\EndMenu.cs" />
+    <Compile Include="Assets\LoadGame.cs" />
     <Compile Include="Assets\RestartGame.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +86,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Low Polygon Potions Pack\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />

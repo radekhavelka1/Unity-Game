@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndScreen : MonoBehaviour
 {
+    /**
     private void Start()
     {
         Debug.Log("ITS HERE");
@@ -17,4 +18,5 @@ public class EndScreen : MonoBehaviour
         Debug.Log("CALL ENDSCREEN");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
+    **/
 }

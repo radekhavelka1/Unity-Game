@@ -14,4 +14,37 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndScreen.unity
     guid: 9a0525bd674f21c4bb444eaeefc83c6a
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 5fcd40ce959246c42aedc98607460956
+  - enabled: 1
+    path: Assets/Scenes/Help.unity
+    guid: b7b496aef0e09064a85115b2dc6a8988
+  - enabled: 1
+    path: Assets/Scenes/Story_1.unity
+    guid: cc8eb534a9fce3b48a1af6abce2e5bfe
+  - enabled: 1
+    path: Assets/Scenes/Story_2.unity
+    guid: a102f4f496f0368468bc4f4f107acaff
+  - enabled: 1
+    path: Assets/Scenes/Story_3.unity
+    guid: b317828f68000714cb145e0cc608a7ff
+  - enabled: 1
+    path: Assets/Scenes/Story_4.unity
+    guid: 33912e011a3e2fe4c87c22142e400934
+  - enabled: 1
+    path: Assets/Scenes/Story_5.unity
+    guid: e164a14978e31ee439c004458fe798c3
+  - enabled: 1
+    path: Assets/Scenes/Story_6.unity
+    guid: c74c0b169c2891f43a52d499565dac14
+  - enabled: 1
+    path: Assets/Scenes/Story_7.unity
+    guid: 6335778c532b7d540b906cf75083c835
+  - enabled: 1
+    path: Assets/Scenes/Story_8.unity
+    guid: dc531686576f2124180943abb277ec57
+  - enabled: 1
+    path: Assets/Scenes/Story_9.unity
+    guid: 771b011d416055c4e9b40abea2e46654
   m_configObjects: {}

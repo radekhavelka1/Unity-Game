@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -15.81f;
     public float jumpHeight = 2f;
+    public int Health = 100;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -36,6 +38,17 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -1f * gravity);
         }
 
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Debug.Log("F1 PRESSED");
+            // Pause the game
+            Time.timeScale = 0f;
+
+            // Load the pause screen scene
+            SceneManager.LoadScene("Help", LoadSceneMode.Additive); ;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
