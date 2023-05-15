@@ -364,6 +364,7 @@
 "Assets/LoadGame_7.cs"
 "Assets/LoadGame_8.cs"
 "Assets/Low Polygon Potions Pack/Other Assets/Scripts/CreatePrefabFromSelected.cs"
+"Assets/Minimap.cs"
 "Assets/MouseLook.cs"
 "Assets/PlayerInventory.cs"
 "Assets/PlayerMovement.cs"
