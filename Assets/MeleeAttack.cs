@@ -11,7 +11,7 @@ public class MeleeAttack : MonoBehaviour
     public GameObject Target;
     public GameObject Player;
     private int currentHealth;
-
+    public bool isDead = false;
     public float attackRadius = 5.0f;
 
     // Time it takes to complete a swing (in seconds)
@@ -24,6 +24,7 @@ public class MeleeAttack : MonoBehaviour
     private float currentSwingTime = 0f;
     private float attackPeriod = 0f;
 
+    public AudioSource zombieSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +52,12 @@ public class MeleeAttack : MonoBehaviour
             }
             if(currentHealth <= 0)
             {
-                Target.SetActive(false);
+                if (!isDead) // Check if the zombie is already dead
+                {
+                    isDead = true;
+                    zombieSound.Play();
+                    Target.SetActive(false);
+                }
             }
 
         }
