@@ -81,6 +81,7 @@
     <Compile Include="Assets\EndMenu.cs" />
     <Compile Include="Assets\LoadGame\LoadGame.cs" />
     <Compile Include="Assets\RestartGame.cs" />
+    <Compile Include="Assets\HealthBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

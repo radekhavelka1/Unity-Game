@@ -17,7 +17,7 @@ public class MeleeAttack : MonoBehaviour
     // Time it takes to complete a swing (in seconds)
     public float swingTime = 0.6f;
     // Damage per swing
-    public int damagePerSwing = 10;
+    public int damagePerSwing = 25;
     // Flag to check if currently attacking
     private bool isAttacking = false;
 

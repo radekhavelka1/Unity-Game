@@ -7,6 +7,7 @@ public class Potion : MonoBehaviour
 {
     public PlayerMovement player;
     public Text healthText;
+    public HealthBar healthBar;
     private void OnTriggerEnter(Collider other)
     {
         PlayerInventory playerInventory = other.GetComponent<PlayerInventory>();
@@ -19,6 +20,7 @@ public class Potion : MonoBehaviour
             }
             Debug.Log(player.Health);
             healthText.text = "HP: " + player.Health.ToString();
+            healthBar.SetHealth(player.Health);
             gameObject.SetActive(false);
         }
     }

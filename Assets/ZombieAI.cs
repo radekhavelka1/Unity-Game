@@ -12,6 +12,7 @@ public class ZombieAI : MonoBehaviour
     public float chaseRadius = 5.0f;
     public float attackRadius = 2.0f;
     public PlayerMovement player;
+    public HealthBar healthBar;
 
     public Transform groundCheck_Zombie;
     public float groundDistance = 0.5f;
@@ -28,17 +29,18 @@ public class ZombieAI : MonoBehaviour
     public bool run = false;
 
     private float attackPeriod = 2f;
-    private int attackDamage = 2;
+    private int attackDamage = 10;
 
     private float timeSinceLastAttack = 0f;
 
-    public int zombieHealth = 20;
+    public int zombieHealth = 100;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         currentHealth = player.Health;
+        healthBar.SetMaxHealth(currentHealth);
         UpdateHealthText();
     }
 
@@ -116,7 +118,7 @@ public class ZombieAI : MonoBehaviour
     {
         // Apply damage to the target
         player.Health -= attackDamage;
-
+        healthBar.SetHealth(player.Health);
         currentHealth = player.Health;
         if(currentHealth <= 0) 
         {

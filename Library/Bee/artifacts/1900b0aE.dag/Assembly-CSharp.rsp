@@ -353,6 +353,7 @@
 "Assets/Clipboard.cs"
 "Assets/EndMenu.cs"
 "Assets/EndScreen.cs"
+"Assets/HealthBar.cs"
 "Assets/InventoryUI.cs"
 "Assets/LoadGame/LoadGame.cs"
 "Assets/LoadGame/LoadGame_1.cs"
