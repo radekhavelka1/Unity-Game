@@ -28,9 +28,11 @@ public class ZombieAI : MonoBehaviour
     public bool run = false;
 
     private float attackPeriod = 2f;
-    private int attackDamage = 20;
+    private int attackDamage = 2;
 
     private float timeSinceLastAttack = 0f;
+
+    public int zombieHealth = 20;
 
     private void Start()
     {
@@ -60,7 +62,7 @@ public class ZombieAI : MonoBehaviour
 
             if (distanceToTarget <= attackRadius)
             {
-                // Stop moving and play the idle animation
+                // Stop moving and play the attack animation
                 rb.velocity = Vector3.zero;
                 transform.LookAt(Target.transform);
 

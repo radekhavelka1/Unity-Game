@@ -58,26 +58,28 @@
   <ItemGroup>
     <Compile Include="Assets\StartMenu.cs" />
     <Compile Include="Assets\Clipboard.cs" />
-    <Compile Include="Assets\LoadGame_1.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_1.cs" />
     <Compile Include="Assets\InventoryUI.cs" />
     <Compile Include="Assets\PlayerInventory.cs" />
-    <Compile Include="Assets\LoadGame_3.cs" />
-    <Compile Include="Assets\LoadGame_8.cs" />
-    <Compile Include="Assets\LoadGame_4.cs" />
-    <Compile Include="Assets\LoadGame_6.cs" />
-    <Compile Include="Assets\LoadGame_7.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_3.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_8.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_4.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_6.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_7.cs" />
     <Compile Include="Assets\Low Polygon Potions Pack\Other Assets\Scripts\CreatePrefabFromSelected.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
-    <Compile Include="Assets\LoadGame_2.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_2.cs" />
     <Compile Include="Assets\ResumeHelp.cs" />
     <Compile Include="Assets\Minimap.cs" />
     <Compile Include="Assets\MouseLook.cs" />
     <Compile Include="Assets\EndScreen.cs" />
     <Compile Include="Assets\ZombieAI.cs" />
-    <Compile Include="Assets\LoadGame_5.cs" />
+    <Compile Include="Assets\VarcanRex\LongSword\Scripts\SimpleRotate.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame_5.cs" />
     <Compile Include="Assets\Potion.cs" />
+    <Compile Include="Assets\MeleeAttack.cs" />
     <Compile Include="Assets\EndMenu.cs" />
-    <Compile Include="Assets\LoadGame.cs" />
+    <Compile Include="Assets\LoadGame\LoadGame.cs" />
     <Compile Include="Assets\RestartGame.cs" />
   </ItemGroup>
   <ItemGroup>
