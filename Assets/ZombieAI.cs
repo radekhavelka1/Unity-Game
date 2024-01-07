@@ -35,6 +35,9 @@ public class ZombieAI : MonoBehaviour
 
     public int zombieHealth = 100;
 
+
+    private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,6 +45,8 @@ public class ZombieAI : MonoBehaviour
         currentHealth = player.Health;
         healthBar.SetMaxHealth(currentHealth);
         UpdateHealthText();
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
     }
 
     private void Update()
@@ -84,9 +89,8 @@ public class ZombieAI : MonoBehaviour
 
             else
             {
-                // Player is within chase radius, run towards the player
-                Vector3 direction = (Target.transform.position - transform.position).normalized;
-                rb.velocity = direction * speed;
+                // Player is within chase radius, run towards the player using NavMeshAgent
+                navMeshAgent.SetDestination(Target.transform.position);
                 transform.LookAt(Target.transform);
 
                 // Play the run animation
