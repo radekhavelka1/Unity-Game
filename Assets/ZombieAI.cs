@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class ZombieAI : MonoBehaviour
 {
     public GameObject Target;
@@ -35,8 +36,13 @@ public class ZombieAI : MonoBehaviour
 
     public int zombieHealth = 100;
 
-
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+
+    public Transform[] patrolWaypoints;
+    private int currentWaypointIndex = 0;
+
+
 
     private void Start()
     {
@@ -46,6 +52,8 @@ public class ZombieAI : MonoBehaviour
         healthBar.SetMaxHealth(currentHealth);
         UpdateHealthText();
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+
 
     }
 
@@ -101,6 +109,10 @@ public class ZombieAI : MonoBehaviour
 
         else
         {
+            //Patrol jen když chci aby hlidkoval zbytek kodu v tomto elsu smazat
+            //Patrol();
+
+
             // Stop moving and play the idle animation
             rb.velocity = Vector3.zero;
             transform.LookAt(Target.transform);
@@ -124,7 +136,7 @@ public class ZombieAI : MonoBehaviour
         player.Health -= attackDamage;
         healthBar.SetHealth(player.Health);
         currentHealth = player.Health;
-        if(currentHealth <= 0) 
+        if (currentHealth <= 0)
         {
             SceneManager.LoadScene("GameOver");
             Cursor.lockState = CursorLockMode.Confined;
@@ -138,4 +150,35 @@ public class ZombieAI : MonoBehaviour
         // Update the text object with the player's current health
         healthText.text = "HP: " + currentHealth.ToString();
     }
+
+
+    private void Patrol()
+    {
+        // Zkontrolujte, zda dosáhli aktuálního patrolního bodu
+        if (Vector3.Distance(transform.position, patrolWaypoints[currentWaypointIndex].position) < 1.0f)
+        {
+            // Pøejdìte na další bod v seznamu
+            currentWaypointIndex = (currentWaypointIndex + 1) % patrolWaypoints.Length;
+        }
+
+        // Nastavte destinaci zombika na aktuální patrolní bod
+        navMeshAgent.SetDestination(patrolWaypoints[currentWaypointIndex].position);
+
+        // Otoèení smìrem k patrolnímu bodu
+        Vector3 targetDirection = (patrolWaypoints[currentWaypointIndex].position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(targetDirection.x, 0, targetDirection.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);  // Úprava rychlosti otáèení
+
+        // Ovìøte, zda zombik dosáhl patrolního bodu
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        {
+            // Zombik dosáhl patrolního bodu, takže mùžete zde provést nìjakou akci
+            // Napøíklad mùžete zmìnit animaci nebo provést jiné úkoly
+        }
+
+        // Nastavte animaci pro patrolování
+        animator.SetBool("Idle", false);
+        animator.SetBool("RUN", true);
+    }
+
 }
