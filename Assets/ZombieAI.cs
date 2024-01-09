@@ -43,6 +43,9 @@ public class ZombieAI : MonoBehaviour
     private int currentWaypointIndex = 0;
 
 
+    private Vector3 currentTargetPosition;
+
+    private bool chasing;
 
     private void Start()
     {
@@ -59,6 +62,9 @@ public class ZombieAI : MonoBehaviour
 
     private void Update()
     {
+
+  
+
         isGrounded = Physics.CheckSphere(groundCheck_Zombie.position, groundDistance, groundMask);
 
         if (!isGrounded)
@@ -72,8 +78,24 @@ public class ZombieAI : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
-        if (distanceToTarget <= chaseRadius)
+        /*
+        float angleToPlayer = Vector3.Angle(transform.forward, (Target.transform.position - transform.position).normalized);
+
+        if(angleToPlayer > 150.0f)
         {
+            chaseRadius = 3.0f;
+        }
+        else
+        {
+            chaseRadius = 5.0f;
+        }
+
+        */
+
+
+        if (distanceToTarget <= chaseRadius )
+        {
+
 
             if (distanceToTarget <= attackRadius)
             {
@@ -97,10 +119,14 @@ public class ZombieAI : MonoBehaviour
 
             else
             {
-                // Player is within chase radius, run towards the player using NavMeshAgent
-                navMeshAgent.SetDestination(Target.transform.position);
                 transform.LookAt(Target.transform);
-
+                if (Vector3.Distance(currentTargetPosition, Target.transform.position) > 1.0f)
+                {
+                    currentTargetPosition = Target.transform.position;
+                    navMeshAgent.SetDestination(currentTargetPosition);
+                    
+                }
+               
                 // Play the run animation
                 animator.SetBool("Idle", false);
                 animator.SetBool("RUN", true);
@@ -109,17 +135,8 @@ public class ZombieAI : MonoBehaviour
 
         else
         {
-            //Patrol jen když chci aby hlidkoval zbytek kodu v tomto elsu smazat
-            //Patrol();
+            Patrol();
 
-
-            // Stop moving and play the idle animation
-            rb.velocity = Vector3.zero;
-            transform.LookAt(Target.transform);
-
-            // Play the idle animation
-            animator.SetBool("Idle", true);
-            animator.SetBool("RUN", false);
         }
     }
 
@@ -154,6 +171,7 @@ public class ZombieAI : MonoBehaviour
 
     private void Patrol()
     {
+
         // Zkontrolujte, zda dosáhli aktuálního patrolního bodu
         if (Vector3.Distance(transform.position, patrolWaypoints[currentWaypointIndex].position) < 1.0f)
         {
@@ -168,6 +186,7 @@ public class ZombieAI : MonoBehaviour
         Vector3 targetDirection = (patrolWaypoints[currentWaypointIndex].position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(new Vector3(targetDirection.x, 0, targetDirection.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);  // Úprava rychlosti otáèení
+        transform.LookAt(patrolWaypoints[currentWaypointIndex].position);
 
         // Ovìøte, zda zombik dosáhl patrolního bodu
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
