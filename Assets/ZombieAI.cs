@@ -56,14 +56,10 @@ public class ZombieAI : MonoBehaviour
         UpdateHealthText();
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
-
-
     }
 
     private void Update()
     {
-
-  
 
         isGrounded = Physics.CheckSphere(groundCheck_Zombie.position, groundDistance, groundMask);
 
@@ -78,24 +74,11 @@ public class ZombieAI : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
-        /*
-        float angleToPlayer = Vector3.Angle(transform.forward, (Target.transform.position - transform.position).normalized);
-
-        if(angleToPlayer > 150.0f)
-        {
-            chaseRadius = 3.0f;
-        }
-        else
-        {
-            chaseRadius = 5.0f;
-        }
-
-        */
-
 
         if (distanceToTarget <= chaseRadius )
         {
 
+            chaseRadius = 15.0f;
 
             if (distanceToTarget <= attackRadius)
             {
@@ -171,6 +154,25 @@ public class ZombieAI : MonoBehaviour
 
     private void Patrol()
     {
+        float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
+
+        
+        float angleToPlayer = Vector3.Angle(transform.forward, (Target.transform.position - transform.position).normalized);
+
+        if(angleToPlayer > 90.0f)
+        {
+            chaseRadius = 1.0f;
+
+            if(distanceToTarget <chaseRadius)
+            {
+                return;
+            }
+        }
+        else
+        {
+            chaseRadius = 15.0f;
+        }
+ 
 
         // Zkontrolujte, zda dosáhli aktuálního patrolního bodu
         if (Vector3.Distance(transform.position, patrolWaypoints[currentWaypointIndex].position) < 1.0f)
