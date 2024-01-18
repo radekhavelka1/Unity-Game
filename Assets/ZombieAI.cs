@@ -34,7 +34,7 @@ public class ZombieAI : MonoBehaviour
 
     private float timeSinceLastAttack = 0f;
 
-    public int zombieHealth = 100;
+    public int zombieHealth;
 
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
 
@@ -46,6 +46,10 @@ public class ZombieAI : MonoBehaviour
     private Vector3 currentTargetPosition;
 
     private bool chasing;
+    public bool isDead = false;
+    private float patrolTimer = 0f;
+    private float idleTimer = 0f;
+    private bool isIdling = false;
 
     private void Start()
     {
@@ -72,21 +76,29 @@ public class ZombieAI : MonoBehaviour
             }
         }
 
+        if (zombieHealth == 0)
+        {
+            isDead = true;
+            Debug.Log(zombieHealth);
+            rb.velocity = Vector3.zero;
+            animator.SetBool("Attack", false);
+            animator.SetBool("Dead", true);
+
+            StartCoroutine(DisappearAfterDeadAnimation());
+        }
+
         float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
-
-        if (distanceToTarget <= chaseRadius )
+        if (distanceToTarget <= chaseRadius)
         {
-
             chaseRadius = 15.0f;
-
-            if (distanceToTarget <= attackRadius)
+            if (distanceToTarget <= attackRadius && !isDead)
             {
                 // Stop moving and play the attack animation
                 rb.velocity = Vector3.zero;
                 transform.LookAt(Target.transform);
 
-                animator.SetTrigger("Attack");
+                animator.SetBool("Attack", true);
                 animator.SetBool("Idle", false);
                 animator.SetBool("RUN", false);
 
@@ -95,22 +107,22 @@ public class ZombieAI : MonoBehaviour
                 if (timeSinceLastAttack >= attackPeriod)
                 {
                     Attack();
-                    Debug.Log(player.Health);
                     timeSinceLastAttack = 0f;
                 }
             }
 
-            else
+            else if (!isDead)
             {
                 transform.LookAt(Target.transform);
                 if (Vector3.Distance(currentTargetPosition, Target.transform.position) > 1.0f)
                 {
                     currentTargetPosition = Target.transform.position;
                     navMeshAgent.SetDestination(currentTargetPosition);
-                    
+
                 }
-               
+
                 // Play the run animation
+                animator.SetBool("Attack", false);
                 animator.SetBool("Idle", false);
                 animator.SetBool("RUN", true);
             }
@@ -122,6 +134,16 @@ public class ZombieAI : MonoBehaviour
 
         }
     }
+
+    private IEnumerator DisappearAfterDeadAnimation()
+    {
+        // Wait for the dead animation to complete (you might need to adjust the time)
+        yield return new WaitForSeconds(2f); // Change this value based on your animation length
+
+        // Do any logic to make the zombie disappear
+        gameObject.SetActive(false); // Or you can destroy the GameObject if needed
+    }
+
 
     // Draw the detection radius in the editor
     private void OnDrawGizmosSelected()
@@ -156,14 +178,13 @@ public class ZombieAI : MonoBehaviour
     {
         float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
-        
         float angleToPlayer = Vector3.Angle(transform.forward, (Target.transform.position - transform.position).normalized);
 
-        if(angleToPlayer > 90.0f)
+        if (angleToPlayer > 90.0f)
         {
-            chaseRadius = 1.0f;
+            chaseRadius = 2.0f;
 
-            if(distanceToTarget <chaseRadius)
+            if (distanceToTarget < chaseRadius)
             {
                 return;
             }
@@ -172,7 +193,34 @@ public class ZombieAI : MonoBehaviour
         {
             chaseRadius = 15.0f;
         }
- 
+
+        // Increment the patrol timer
+        patrolTimer += Time.deltaTime;
+
+        // Check if it's time to idle
+        if (patrolTimer >= 5.0f && !isIdling)
+        {
+            isIdling = true;
+            idleTimer = 0f;
+
+            // Stop patrolling and play the idle animation
+            animator.SetBool("RUN", false);
+            animator.SetBool("Walk", true);
+        }
+
+        // Check if it's time to resume patrolling after idling for 2 seconds
+        if (isIdling)
+        {
+            idleTimer += Time.deltaTime;
+
+            if (idleTimer >= 2.0f)
+            {
+                isIdling = false;
+                patrolTimer = 0f;
+                animator.SetBool("Walk", false);
+                animator.SetBool("RUN", true);
+            }
+        }
 
         // Zkontrolujte, zda dosáhli aktuálního patrolního bodu
         if (Vector3.Distance(transform.position, patrolWaypoints[currentWaypointIndex].position) < 1.0f)
@@ -190,16 +238,12 @@ public class ZombieAI : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);  // Úprava rychlosti otáèení
         transform.LookAt(patrolWaypoints[currentWaypointIndex].position);
 
-        // Ovìøte, zda zombik dosáhl patrolního bodu
+        /* Ovìøte, zda zombik dosáhl patrolního bodu
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            // Zombik dosáhl patrolního bodu, takže mùžete zde provést nìjakou akci
-            // Napøíklad mùžete zmìnit animaci nebo provést jiné úkoly
+            
         }
-
-        // Nastavte animaci pro patrolování
-        animator.SetBool("Idle", false);
-        animator.SetBool("RUN", true);
+        */
     }
 
 }

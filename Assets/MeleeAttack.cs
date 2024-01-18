@@ -39,7 +39,7 @@ public class MeleeAttack : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(Player.transform.position, Target.transform.position);
 
-        if (Input.GetButton("Fire1") && !isAttacking)
+        if (!zombie.isDead && !isDead && Input.GetButton("Fire1") && !isAttacking)
         {
             isAttacking = true;
             currentSwingTime = 0f;
@@ -47,26 +47,22 @@ public class MeleeAttack : MonoBehaviour
             animator.SetBool("attacking", true);
             if (zombie != null && isAttacking && distanceToTarget <= attackRadius)
             {
-                currentHealth -= damagePerSwing;
+                zombie.zombieHealth -= damagePerSwing;
+                currentHealth = zombie.zombieHealth;
                 Debug.Log("Zombie HP after atttack: " + currentHealth);
             }
-            if(currentHealth <= 0)
+            if (currentHealth <= 0)
             {
                 if (!isDead) // Check if the zombie is already dead
                 {
+                    Debug.Log("Dead in melee script");
                     isDead = true;
                     zombieSound.Play();
-                    Target.SetActive(false);
                 }
             }
 
         }
-        /**
-        else if (Input.GetButtonUp("Fire1"))
-        {
-            StopAttack();
-        }
-        **/
+
 
         if (isAttacking)
         {
